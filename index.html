@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/svg+xml"
+  href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none' stroke='%23e06c75' stroke-width='3.2' stroke-linecap='round'%3E%3Cpath d='M3 10c5-5 9 5 14 0s9-5 12 0'/%3E%3Cpath d='M3 16c5-5 9 5 14 0s9-5 12 0' opacity='.75'/%3E%3Cpath d='M3 22c5-5 9 5 14 0s9-5 12 0' opacity='.5'/%3E%3C/svg%3E">
+<title>Perlin Flow</title>
+<meta name="description" content="A live Perlin-noise flow field cover with editable text, PNG download and looping GIF capture.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap">
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 32 32" width="22" height="22" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">
+        <path d="M3 10c5-5 9 5 14 0s9-5 12 0"/>
+        <path d="M3 16c5-5 9 5 14 0s9-5 12 0" opacity="0.7"/>
+        <path d="M3 22c5-5 9 5 14 0s9-5 12 0" opacity="0.4"/>
+      </svg>
+      Perlin Flow
+    </div>
+    <p class="spec" id="spec">Cover · 1584 × 396 · downloads at 3168 × 792</p>
+  </header>
+
+  <section class="stage">
+    <canvas id="cover" width="3168" height="792" role="img" aria-label="Animated flow-field cover preview"></canvas>
+    <div class="status" id="status" data-state="painting"><i></i><span>Painting 0%</span></div>
+  </section>
+
+  <section class="controls" aria-label="Background controls">
+    <div class="group">
+      <span class="label">Style</span>
+      <div class="seg" id="styles">
+        <button type="button" data-style="streams" aria-pressed="true">Streams</button>
+        <button type="button" data-style="bold" aria-pressed="false">Bold</button>
+      </div>
+    </div>
+    <div class="group">
+      <span class="label" id="patternLabel">Pattern</span>
+      <div class="stepper">
+        <button type="button" id="prev" aria-label="Previous pattern">‹</button>
+        <input type="number" id="pattern" min="0" step="1" value="0" aria-labelledby="patternLabel">
+        <button type="button" id="next" aria-label="Next pattern">›</button>
+      </div>
+      <button type="button" id="shuffle">Shuffle</button>
+    </div>
+    <div class="actions">
+      <button type="button" id="play">Pause</button>
+      <button type="button" id="repaint">Repaint</button>
+      <button type="button" id="downloadGif">Download GIF</button>
+      <button type="button" id="download" class="primary">Download PNG</button>
+    </div>
+  </section>
+
+  <section class="fields" aria-label="Text">
+    <label>Greeting <input type="text" id="greeting" value="Hello World! I am" spellcheck="false"></label>
+    <label>Name <input type="text" id="name" value="Full Name" spellcheck="false"></label>
+    <label>Title <input type="text" id="title" value="Job Title" spellcheck="false"></label>
+    <label class="check"><input type="checkbox" id="showText" checked> Show text</label>
+  </section>
+
+  <details class="options" id="options">
+    <summary>Options <span class="hint">the same settings as cover.py</span></summary>
+    <div class="opt-body">
+      <div class="opt-groups">
+        <fieldset class="opt-group"><legend>Background</legend><div class="opt-grid" id="grp-bg"></div></fieldset>
+        <fieldset class="opt-group single"><legend>Text</legend><div class="opt-grid" id="grp-text"></div></fieldset>
+        <fieldset class="opt-group single"><legend>Size</legend><div class="opt-grid" id="grp-size"></div></fieldset>
+        <fieldset class="opt-group single"><legend>GIF</legend><div class="opt-grid" id="grp-gif"></div></fieldset>
+      </div>
+      <div class="cmd-row">
+        <code id="cmd"></code>
+        <button type="button" id="copyCmd">Copy command</button>
+      </div>
+      <div class="opt-foot">
+        <span class="opt-note" id="optNote">Run the command in the repo folder to render these settings with cover.py.
+          It uses the same flow field; individual strokes differ slightly.</span>
+        <button type="button" id="resetOpts">Reset options</button>
+      </div>
+    </div>
+  </details>
+
+  <p class="tip">
+    The flow keeps drifting, so pause on a frame you like and then download, or tick
+    <strong>Stop when painted</strong> under Options. <strong>Download GIF</strong> records a
+    short looping clip of the motion (length, frame rate and width under Options → GIF).
+  </p>
+</main>
+
+<!-- GIF encoder: gifenc 1.0.3 by Matt DesLauriers (MIT), https://github.com/mattdesl/gifenc.
+     It ships as an ES module, so this small module script loads it and hands it to script.js. -->
+<script type="module">
+  import { GIFEncoder, quantize, applyPalette } from "https://cdn.jsdelivr.net/npm/gifenc@1.0.3/dist/gifenc.esm.js";
+  window.gifenc = { GIFEncoder, quantize, applyPalette };
+</script>
+<script src="script.js"></script>
+</body>
+</html>

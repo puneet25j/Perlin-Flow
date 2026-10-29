@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# experiment covers
+/images
+
+# Downloaded on first run (OFL-licensed; commit it only together with its OFL.txt)
+FiraCode-VF.ttf
+
+# macOS folder metadata
+.DS_Store
+
+# Renders saved in the repo root (cover.png, bg.png, ...)
+/*.png
